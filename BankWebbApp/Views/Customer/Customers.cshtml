@@ -1,0 +1,57 @@
+﻿@model BankWebbApp.ViewModels.CustomerViewModel
+
+@{
+  
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+        <div class="card">
+            <div class="card-header">
+                <h2 style="text-decoration:underline;">List of the Customers</h2>
+            </div>
+            <br />
+            <form class="form-inline m-lg-3">
+                <div class="input-group input-group-sm">
+                    <input value="@ViewData["SearchValue"]" name="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+                    <div class="input-group-append">
+                        <button class="btn btn-navbar" type="submit" asp-controller="Customer" asp-action="Customers">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <table id="example2" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Customer Number</th>
+                            <th>National ID Number </th>
+                            <th>Given Name</th>
+                            <th>Address</th>
+                            <th>City</th>
+                            <th>Customer Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Items)
+                        {
+                            <tr>
+                                <td>@item.CustomerId</td>
+                                <td>
+                                    @item.NationalId
+                                </td>
+                                <td>@item.Givenname</td>
+                                <td>@item.Streetaddress</td>
+                                <td>@item.City</td>
+                                <td><a asp-action="CustomerDetails" asp-controller="Customer" asp-route-CustomerID="@item.CustomerId">Customer Details</a></td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+
+           
+        </div>
+
+        @await Html.PartialAsync("_PagerBootstrap", Model.PagingViewModel)
